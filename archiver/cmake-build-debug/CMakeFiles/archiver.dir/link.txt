@@ -1,3 +1,0 @@
-"C:\Program Files\JetBrains\CLion 2021.2.1\bin\cmake\win\bin\cmake.exe" -E rm -f CMakeFiles\archiver.dir/objects.a
-C:\msys64\mingw64\bin\ar.exe cr CMakeFiles\archiver.dir/objects.a @CMakeFiles\archiver.dir\objects1.rsp
-C:\msys64\mingw64\bin\g++.exe -g -Wl,--whole-archive CMakeFiles\archiver.dir/objects.a -Wl,--no-whole-archive -o archiver.exe -Wl,--out-implib,libarchiver.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\archiver.dir\linklibs.rsp

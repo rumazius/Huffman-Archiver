@@ -1,21 +1,14 @@
-#include "TextReader.h"
-#include "Bor.h"
 #include "BitWriter.h"
 #include "Compressor.h"
 #include "Decompressor.h"
-#include "BitReader.h"
+#include "TextReader.h"
 
-#include <vector>
 #include <iostream>
-#include <fstream>
-#include <cstdint>
 #include <cstring>
 #include <string>
 
-
-
 int main(int argc, char* argv[]) {
-    if (argc == 0) {
+    if (argc == 1) {
         return 0;
     }
     if (std::strcmp(argv[1], "-h") == 0) {
@@ -28,8 +21,9 @@ int main(int argc, char* argv[]) {
             std::cerr << "Enter file name!";
             throw;
         }
+
         std::string archive_name = argv[2];
-        std::ifstream is(argv[2]);
+        std::ifstream is(argv[2], std::ios_base::binary);
         if (!is.is_open()) {
             std::cerr << "No such file!";
             throw;
@@ -42,46 +36,26 @@ int main(int argc, char* argv[]) {
             throw;
         }
 
-        std::ofstream fout(argv[2]);
+        std::ofstream fout(argv[2], std::ios_base::binary);
         BitWriter writer(fout);
         for (size_t i = 3; i != argc; ++i) {
-            std::ifstream fin(argv[i]);
+            std::ifstream fin(argv[i], std::ios_base::binary);
 
             TextReader t(fin);
             auto symbol_cnt = t.GetSymbolCnt();
+
             for (size_t j = 0; argv[i][j] != '\0'; ++j) {
                 ++symbol_cnt[static_cast<size_t>(argv[i][j])];
             }
-
             Compressor compressor(symbol_cnt, writer, argv[i]);
             if (i + 1 == argc) {
-                compressor.Write(true);
+                compressor.WriteEncodedFile(true);
             } else {
-                compressor.Write();
+                compressor.WriteEncodedFile();
             }
         }
         writer.Clear();
     }
-
-
-//    std::ifstream fin("in");
-//    std::ofstream fout("out");
-//    TextReader t(fin);
-//    auto symb_cnt = t.GetSymbolCnt();
-//    symb_cnt['i']++;
-//    symb_cnt['n']++;
-//    ++symb_cnt[256];
-//    ++symb_cnt[257];
-//    ++symb_cnt[258];
-//    BitWriter writer(fout);
-//    Compressor compressor(symb_cnt, writer, "in");
-//    compressor.Write();
-//    writer.Clear();
-
-//    std::ifstream fin1("out");
-//    Decompressor decomp("out", fin1);
-    //return 0;
-//    decomp.Decompress();
 
     return 0;
 }

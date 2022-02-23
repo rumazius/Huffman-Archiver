@@ -1,2 +1,0 @@
-C:\msys64\mingw64\bin\ar.exe qc libarchiver_library.a CMakeFiles/archiver_library.dir/PriorQueue.cpp.obj CMakeFiles/archiver_library.dir/TextReader.cpp.obj
-C:\msys64\mingw64\bin\ranlib.exe libarchiver_library.a
